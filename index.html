@@ -7,6 +7,7 @@
     <title>Alpine JS Test</title>
     <link rel="icon" type="image/svg+xml" href="https://fav.farm/🌟">
     <link rel="mask-icon" href="https://fav.farm/🌟" >
+    <script src="./assets/alpine-focus.js" defer></script>
     <script src="./assets/alpine.min.js" defer></script>
     <script src="https://cdn.tailwindcss.com/"></script>
     <style>[x-cloak] {display: none}</style>
@@ -45,6 +46,59 @@
         </div>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. </p>
+
+        
+        <span x-data="{ open: false }" class="block">
+            <!-- Trigger -->
+            <span x-on:click="open = true">
+                <button type="button" class="bg-slate-200 text-slate-900 px-4 py-2">
+                    Open dialog
+                </button>
+            </span>
+
+            <!-- Modal -->
+            <div
+                x-show="open"
+                style="display: none"
+                x-on:keydown.escape.prevent.stop="open = false"
+                role="dialog"
+                aria-modal="true"
+                x-id="['modal-title']"
+                :aria-labelledby="$id('modal-title')"
+                class="fixed inset-0 overflow-y-auto"
+                x-trap="open"
+            >
+                <!-- Overlay -->
+                <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
+
+                <!-- Panel -->
+                <div
+                    x-show="open" x-transition
+                    x-on:click="open = false"
+                    class="relative min-h-screen flex items-center justify-center p-4"
+                >
+                    <div
+                        x-on:click.stop
+                        x-trap.noscroll.inert="open"
+                        class="relative max-w-2xl w-full bg-white border border-black p-8 overflow-y-auto"
+                    >
+                        <!-- Title -->
+                        <h2 class="text-3xl font-medium" :id="$id('modal-title')">Confirm</h2>
+                        <!-- Content -->
+                        <p class="mt-2 text-gray-600">Are you sure you want to learn how to create an awesome modal?</p>
+                        <!-- Buttons -->
+                        <div class="mt-8 flex space-x-2">
+                            <button type="button" x-on:click="open = false" class="bg-white border border-black px-4 py-2">
+                                Confirm
+                            </button>
+                            <button type="button" x-on:click="open = false" class="bg-white border border-black px-4 py-2">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
 
         <p>Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit</i>. Proin ut ligula vel nunc egestas porttitor. <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit</i>. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit</i>. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. </p>
 
